@@ -1,8 +1,10 @@
-package linkedlist
+package datastructure.linkedlist
 
 import java.util.*
 
-class PrintInReverse {
+class DeleteDuplicate {
+
+
     class SinglyLinkedListNode(nodeData: Int) {
         public var data: Int
         public var next: SinglyLinkedListNode?
@@ -11,6 +13,12 @@ class PrintInReverse {
             data = nodeData
             next = null
         }
+
+        override fun toString(): String {
+            return "SinglyLinkedListNode(data=$data, next=$next)"
+        }
+
+
     }
 
     class SinglyLinkedList {
@@ -49,41 +57,26 @@ class PrintInReverse {
         }
     }
 
-// Complete the reversePrint function below.
+    // Complete the removeDuplicates function below.
+    fun removeDuplicates(head: SinglyLinkedListNode?): SinglyLinkedListNode? {
+        if (head == null) return head
 
-    /*
-     * For your reference:
-     *
-     * SinglyLinkedListNode {
-     *     data: Int
-     *     next: SinglyLinkedListNode
-     * }
-     *
-     */
-    fun reversePrint(llist: SinglyLinkedListNode?): Unit {
-        if (llist == null)
-            return
-
-        val stack = Stack<Int>()
-        var selectedNode = llist
-
-        do {
-            stack.add(selectedNode?.data)
-            selectedNode = selectedNode?.next
-        } while (selectedNode != null)
-
-
-        while (stack.isNotEmpty()) {
-            println(stack.pop())
+        if (head.data == head.next?.data) {
+            head.next = head.next?.next
+            removeDuplicates(head)
+        } else {
+            removeDuplicates(head.next)
         }
+
+        return head
     }
 
     fun main(args: Array<String>) {
         val scan = Scanner(System.`in`)
 
-        val tests = scan.nextLine().trim().toInt()
+        val t = scan.nextLine().trim().toInt()
 
-        for (testsItr in 1..tests) {
+        for (tItr in 1..t) {
             val llistCount = scan.nextLine().trim().toInt()
             val llist = SinglyLinkedList()
 
@@ -92,7 +85,9 @@ class PrintInReverse {
                 llist.insertNode(llist_item)
             }
 
-            reversePrint(llist?.head)
+            val llist1 = removeDuplicates(llist?.head)
+
+            printSinglyLinkedList(llist1, " ")
         }
     }
 }

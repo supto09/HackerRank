@@ -1,8 +1,8 @@
-package linkedlist
+package datastructure.linkedlist
 
 import java.util.*
 
-class InsertANodeAtASpecificPosition {
+class PrintInReverse {
     class SinglyLinkedListNode(nodeData: Int) {
         public var data: Int
         public var next: SinglyLinkedListNode?
@@ -49,7 +49,7 @@ class InsertANodeAtASpecificPosition {
         }
     }
 
-// Complete the insertNodeAtPosition function below.
+// Complete the reversePrint function below.
 
     /*
      * For your reference:
@@ -60,37 +60,39 @@ class InsertANodeAtASpecificPosition {
      * }
      *
      */
-    fun insertNodeAtPosition(llist: SinglyLinkedListNode?, data: Int, position: Int): SinglyLinkedListNode? {
-        var selectedNode: SinglyLinkedListNode? = llist
-        for (index in 1 until position) {
+    fun reversePrint(llist: SinglyLinkedListNode?): Unit {
+        if (llist == null)
+            return
+
+        val stack = Stack<Int>()
+        var selectedNode = llist
+
+        do {
+            stack.add(selectedNode?.data)
             selectedNode = selectedNode?.next
+        } while (selectedNode != null)
+
+
+        while (stack.isNotEmpty()) {
+            println(stack.pop())
         }
-
-        val newNode = SinglyLinkedListNode(data)
-        newNode.next = selectedNode?.next
-
-        selectedNode?.next = newNode
-
-        return llist
     }
 
     fun main(args: Array<String>) {
         val scan = Scanner(System.`in`)
 
-        val llistCount = scan.nextLine().trim().toInt()
-        val llist = SinglyLinkedList()
+        val tests = scan.nextLine().trim().toInt()
 
-        for (i in 0 until llistCount) {
-            val llist_item = scan.nextLine().trim().toInt()
-            llist.insertNode(llist_item)
+        for (testsItr in 1..tests) {
+            val llistCount = scan.nextLine().trim().toInt()
+            val llist = SinglyLinkedList()
+
+            for (i in 0 until llistCount) {
+                val llist_item = scan.nextLine().trim().toInt()
+                llist.insertNode(llist_item)
+            }
+
+            reversePrint(llist?.head)
         }
-
-        val data = scan.nextLine().trim().toInt()
-
-        val position = scan.nextLine().trim().toInt()
-
-        val llist_head = insertNodeAtPosition(llist?.head, data, position)
-
-        printSinglyLinkedList(llist_head, " ")
     }
 }

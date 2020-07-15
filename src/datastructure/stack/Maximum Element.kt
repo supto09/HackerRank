@@ -1,4 +1,4 @@
-package stack
+package datastructure.stack
 
 import java.io.IOException
 import java.util.*

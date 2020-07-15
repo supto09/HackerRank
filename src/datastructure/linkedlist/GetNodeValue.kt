@@ -1,10 +1,8 @@
-package linkedlist
+package datastructure.linkedlist
 
 import java.util.*
 
-class DeleteDuplicate {
-
-
+class GetNodeValue {
     class SinglyLinkedListNode(nodeData: Int) {
         public var data: Int
         public var next: SinglyLinkedListNode?
@@ -13,12 +11,6 @@ class DeleteDuplicate {
             data = nodeData
             next = null
         }
-
-        override fun toString(): String {
-            return "SinglyLinkedListNode(data=$data, next=$next)"
-        }
-
-
     }
 
     class SinglyLinkedList {
@@ -57,26 +49,40 @@ class DeleteDuplicate {
         }
     }
 
-    // Complete the removeDuplicates function below.
-    fun removeDuplicates(head: SinglyLinkedListNode?): SinglyLinkedListNode? {
-        if (head == null) return head
+// Complete the datastructure.linkedlist.getNode function below.
 
-        if (head.data == head.next?.data) {
-            head.next = head.next?.next
-            removeDuplicates(head)
-        } else {
-            removeDuplicates(head.next)
+    /*
+     * For your reference:
+     *
+     * datastructure.linkedlist.SinglyLinkedListNode {
+     *     data: Int
+     *     next: datastructure.linkedlist.SinglyLinkedListNode
+     * }
+     *
+     */
+    fun getNode(llist: SinglyLinkedListNode?, positionFromTail: Int): Int {
+        var currentNode = llist
+        val valueStack = Stack<Int>()
+        while (currentNode != null) {
+            valueStack.add(currentNode.data)
+            currentNode = currentNode.next
         }
 
-        return head
+
+        var result = 0
+        for (index in 0..positionFromTail) {
+            result = valueStack.pop()
+        }
+
+        return result
     }
 
     fun main(args: Array<String>) {
         val scan = Scanner(System.`in`)
 
-        val t = scan.nextLine().trim().toInt()
+        val tests = scan.nextLine().trim().toInt()
 
-        for (tItr in 1..t) {
+        for (testsItr in 1..tests) {
             val llistCount = scan.nextLine().trim().toInt()
             val llist = SinglyLinkedList()
 
@@ -85,9 +91,11 @@ class DeleteDuplicate {
                 llist.insertNode(llist_item)
             }
 
-            val llist1 = removeDuplicates(llist?.head)
+            val position = scan.nextLine().trim().toInt()
 
-            printSinglyLinkedList(llist1, " ")
+            val result = getNode(llist?.head, position)
+
+            println(result)
         }
     }
 }

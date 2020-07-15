@@ -1,8 +1,8 @@
-package linkedlist
+package datastructure.linkedlist
 
 import java.util.*
 
-class DeleteANode {
+class InsertANodeAtASpecificPosition {
     class SinglyLinkedListNode(nodeData: Int) {
         public var data: Int
         public var next: SinglyLinkedListNode?
@@ -49,7 +49,7 @@ class DeleteANode {
         }
     }
 
-// Complete the deleteNode function below.
+// Complete the insertNodeAtPosition function below.
 
     /*
      * For your reference:
@@ -60,20 +60,16 @@ class DeleteANode {
      * }
      *
      */
-    fun deleteNode(llist: SinglyLinkedListNode?, position: Int): SinglyLinkedListNode? {
-        var currentNode = llist
-        var nextNode = llist?.next
-
-        if (position == 0)
-            return nextNode
-
+    fun insertNodeAtPosition(llist: SinglyLinkedListNode?, data: Int, position: Int): SinglyLinkedListNode? {
+        var selectedNode: SinglyLinkedListNode? = llist
         for (index in 1 until position) {
-            currentNode = nextNode
-            nextNode = nextNode?.next
+            selectedNode = selectedNode?.next
         }
 
+        val newNode = SinglyLinkedListNode(data)
+        newNode.next = selectedNode?.next
 
-        currentNode?.next = nextNode?.next
+        selectedNode?.next = newNode
 
         return llist
     }
@@ -89,10 +85,12 @@ class DeleteANode {
             llist.insertNode(llist_item)
         }
 
+        val data = scan.nextLine().trim().toInt()
+
         val position = scan.nextLine().trim().toInt()
 
-        val llist1 = deleteNode(llist?.head, position)
+        val llist_head = insertNodeAtPosition(llist?.head, data, position)
 
-        printSinglyLinkedList(llist1, " ")
+        printSinglyLinkedList(llist_head, " ")
     }
 }

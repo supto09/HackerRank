@@ -1,4 +1,4 @@
-package linkedlist;
+package datastructure.linkedlist;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

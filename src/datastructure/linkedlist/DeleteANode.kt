@@ -1,8 +1,8 @@
-package linkedlist
+package datastructure.linkedlist
 
 import java.util.*
 
-class GetNodeValue {
+class DeleteANode {
     class SinglyLinkedListNode(nodeData: Int) {
         public var data: Int
         public var next: SinglyLinkedListNode?
@@ -49,53 +49,50 @@ class GetNodeValue {
         }
     }
 
-// Complete the linkedlist.getNode function below.
+// Complete the deleteNode function below.
 
     /*
      * For your reference:
      *
-     * linkedlist.SinglyLinkedListNode {
+     * SinglyLinkedListNode {
      *     data: Int
-     *     next: linkedlist.SinglyLinkedListNode
+     *     next: SinglyLinkedListNode
      * }
      *
      */
-    fun getNode(llist: SinglyLinkedListNode?, positionFromTail: Int): Int {
+    fun deleteNode(llist: SinglyLinkedListNode?, position: Int): SinglyLinkedListNode? {
         var currentNode = llist
-        val valueStack = Stack<Int>()
-        while (currentNode != null) {
-            valueStack.add(currentNode.data)
-            currentNode = currentNode.next
+        var nextNode = llist?.next
+
+        if (position == 0)
+            return nextNode
+
+        for (index in 1 until position) {
+            currentNode = nextNode
+            nextNode = nextNode?.next
         }
 
 
-        var result = 0
-        for (index in 0..positionFromTail) {
-            result = valueStack.pop()
-        }
+        currentNode?.next = nextNode?.next
 
-        return result
+        return llist
     }
 
     fun main(args: Array<String>) {
         val scan = Scanner(System.`in`)
 
-        val tests = scan.nextLine().trim().toInt()
+        val llistCount = scan.nextLine().trim().toInt()
+        val llist = SinglyLinkedList()
 
-        for (testsItr in 1..tests) {
-            val llistCount = scan.nextLine().trim().toInt()
-            val llist = SinglyLinkedList()
-
-            for (i in 0 until llistCount) {
-                val llist_item = scan.nextLine().trim().toInt()
-                llist.insertNode(llist_item)
-            }
-
-            val position = scan.nextLine().trim().toInt()
-
-            val result = getNode(llist?.head, position)
-
-            println(result)
+        for (i in 0 until llistCount) {
+            val llist_item = scan.nextLine().trim().toInt()
+            llist.insertNode(llist_item)
         }
+
+        val position = scan.nextLine().trim().toInt()
+
+        val llist1 = deleteNode(llist?.head, position)
+
+        printSinglyLinkedList(llist1, " ")
     }
 }
